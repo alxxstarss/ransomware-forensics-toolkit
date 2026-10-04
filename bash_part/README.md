@@ -1,75 +1,45 @@
-# Toolbox de Gestion d'Archives
+# Archive Management Toolbox
 
 ## Description
 
-Ce projet contient 5 scripts permettant de gerer un environnement de travail pour analyser des archives de sauvegardes potentiellement compromises par un ransomware.
+This folder contains 5 scripts to manage a workspace for analyzing backup archives potentially compromised by ransomware.
 
-## Liste des fichiers
+## File List
 
-- `init-toolbox.sh` : Initialise l'environnement de travail
-- `import-archive.sh` : Importe des archives dans l'environnement
-- `ls-toolbox.sh` : Liste les archives importees
-- `check-archive.sh` : Analyse une archive et detecte les fichiers suspects
-- `restore-toolbox.sh` : Restaure un environnement corrompu
+- `init-toolbox.sh` : Initializes the workspace
+- `import-archive.sh` : Imports archives into the workspace
+- `ls-toolbox.sh` : Lists imported archives
+- `check-archive.sh` : Analyzes an archive and detects suspicious files
+- `restore-toolbox.sh` : Restores a corrupted workspace
 
-### Etapes
+### Steps
 ```bash
-# Rendre les scripts executables
+# Make the scripts executable
 chmod +x *.sh
 
-# Initialiser l'environnement
-./init-toolbox.sh
-```
+# Initialize the workspace
+./init-toolbox.sh  Creates the .sh-toolbox folder and the archives file.
 
-## Utilisation
-
-### 1. Initialisation
-```bash
-./init-toolbox.sh
-```
-
-Cree le dossier `.sh-toolbox` et le fichier `archives`
-
-### 2. Import d'archives
-```bash
-# Importer une archive
+# Import a single archive
 ./import-archive.sh client1.tar.gz
 
-# Importer plusieurs archives
+# Import multiple archives
 ./import-archive.sh client1.tar.gz client2.tar.gz
 
-# Forcer l'ecrasement
+# Force overwrite
 ./import-archive.sh -f client1.tar.gz
-```
 
-### 3. Lister les archives
-```bash
+#Listing archives
 ./ls-toolbox.sh
-```
 
-Affiche toutes les archives importees avec leurs informations.
-
-### 4. Analyser une archive
-```bash
+#Analyzing an archive
 ./check-archive.sh
-```
 
-- Selectionne une archive a analyser
-- Decompresse l'archive temporairement
-- Recherche la derniere connexion admin
-- Identifie les fichiers modifies apres cette connexion
-- Recherche des versions saines dans les autres archives
-
-### 5. Restaurer l'environnement
-```bash
+#Restoring the workspace
 ./restore-toolbox.sh
-```
 
-Detecte et corrige automatiquement les problemes dans l'environnement.
-
-## Structure de l'environnement
-```
-projet/
+#Workspace Structure
+bash_file/
 ├── init-toolbox.sh
 ├── import-archive.sh
 ├── ls-toolbox.sh
@@ -79,39 +49,35 @@ projet/
     ├── archives
     ├── client1.tar.gz
     └── client2.tar.gz
-```
 
-## Format du fichier archives
-```
+#Archive File Format
 3
 client1.tar.gz:20251127-120000:
 client2.tar.gz:20251128-130000:AES256_KEY
 client3.tar.gz:20251129-140000:
-```
+Format : [archive_name:import_date:decryption_key]
 
-Format : `nom_archive:date_import:cle_dechiffrement`
-
-## Workflow typique
-```bash
-# 1. Initialiser
+#Typical Workflow
+# 1. Initialize
 ./init-toolbox.sh
 
-# 2. Importer des archives
+# 2. Import archives
 ./import-archive.sh client1.tar.gz client2.tar.gz
 
-# 3. Verifier les imports
+# 3. Verify imports
 ./ls-toolbox.sh
 
-# 4. Analyser une archive
+# 4. Analyze an archive
 ./check-archive.sh
 
-# 5. Restaurer si probleme
+# 5. Restore if there's an issue
 ./restore-toolbox.sh
-```
 
-## Fonctionnalites bonus
+#Bonus Features
+# 1. import-archive.sh : -f option to force overwrite, multiple file import support
 
-- **import-archive.sh** : Option -f pour forcer l'ecrasement, import de plusieurs fichiers
-- **ls-toolbox.sh** : Detection des incoherences entre fichiers et archives
-- **restore-toolbox.sh** : Restauration automatique de l'environnement
-- **check-archive.sh** : Recherche de versions saines dans les autres archives
+# 2. ls-toolbox.sh : Detection of inconsistencies between files and archives
+
+# 3. restore-toolbox.sh : Automatic workspace restoration
+
+# 4. check-archive.sh : Search for healthy versions in other archives
